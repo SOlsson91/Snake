@@ -3,7 +3,7 @@ EXE = game
 CXXFILES = $(shell find src -maxdepth 1 -type f -name '*.cpp')
 CXXOBJECTS = $(CXXFILES:.cpp=.o)
 
-CXXFLAGS = -Wall -Wextra -std=c++14
+CXXFLAGS = -Wall -Wextra -std=c++17 -g
 LDFLAGS = -lncurses
 
 INCLUDE = 
