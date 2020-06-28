@@ -2,8 +2,8 @@
 #include <unistd.h>
 
 Game::Game()
-	: m_GameOver(false), m_PlayerDirection(Direction::UP), m_PlayerPos({(MAP_WIDTH / 2), (MAP_HEIGHT / 2)}),
-	m_Score(0), m_TailLength(0)
+	: m_GameOver(false), m_Score(0), m_TailLength(0), m_PlayerPos({(MAP_WIDTH / 2), (MAP_HEIGHT / 2)}),
+	m_PlayerDirection(Direction::UP)
 {
 	m_Tail.push_back(m_PlayerPos);
 	srand(time(0));
@@ -59,23 +59,26 @@ void Game::Draw()
 			}
 			else
 			{
-				bool print = false;
-				for (int k = 0; k < m_TailLength; k++)
-				{
-					if (m_Tail[k].x == x && m_Tail[k].y == y)
-					{
-						move(m_Tail[k].y, m_Tail[k].x);
-						printw("o");
-						print = true;
-					}
-				}
-				if (!print)
-				{
+				if (!DrawTail(x, y))
 					printw(" ");
-				}
 			}
 		}
 	}
+}
+
+bool Game::DrawTail(int x, int y)
+{
+	bool print = false;
+	for (auto c = 0; c < m_TailLength; c++)
+	{
+		if (m_Tail[c].x == x && m_Tail[c].y == y)
+		{
+			move(m_Tail[c].y, m_Tail[c].x);
+			printw("o");
+			print = true;
+		}
+	}
+	return print;
 }
 
 void Game::GetInput()
@@ -100,8 +103,6 @@ void Game::GetInput()
 		if (m_PlayerDirection != Direction::LEFT)
 			m_PlayerDirection = Direction::RIGHT;
 		break;
-
-
 	case 'q':
 		m_PlayerDirection = Direction::STOP;
 		m_GameOver = true;

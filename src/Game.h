@@ -29,6 +29,7 @@ public:
 	void Sleep();
 private:
 	void SetRandomFruitLocation();
+	bool DrawTail(int x, int y);
 
 	const int MAP_WIDTH = 50;
 	const int MAP_HEIGHT = 20;
