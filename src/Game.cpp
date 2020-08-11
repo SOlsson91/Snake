@@ -64,6 +64,8 @@ void Game::Draw()
 			}
 		}
 	}
+	DrawInfo();
+	DrawScore();
 }
 
 bool Game::DrawTail(int x, int y)
@@ -79,6 +81,28 @@ bool Game::DrawTail(int x, int y)
 		}
 	}
 	return print;
+}
+
+void Game::DrawScore()
+{
+	move(MAP_HEIGHT / 2, MAP_WIDTH + 1);
+	printw("Score: %d", m_Score);
+}
+
+void Game::DrawInfo()
+{
+	move(0, MAP_WIDTH + 1);
+	printw("Movement");
+	move(1, MAP_WIDTH + 1);
+	printw("Left = 'A' / Left-arrow");
+	move(2, MAP_WIDTH + 1);
+	printw("Right = 'D' / Right-arrow");
+	move(3, MAP_WIDTH + 1);
+	printw("Up = 'W' / Up-arrow");
+	move(4, MAP_WIDTH + 1);
+	printw("Down = 'S' / Down-arrow");
+	move(6, MAP_WIDTH + 1);
+	printw("Quit = 'Q'");
 }
 
 void Game::GetInput()
