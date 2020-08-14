@@ -1,5 +1,8 @@
-#include "./Game.h"
 #include <unistd.h>
+#include "./Game.h"
+#include "./MenuState.h"
+
+std::unique_ptr<StateMachine> Game::stateMachine = std::make_unique<StateMachine>();
 
 Game::Game()
 	: m_GameOver(false), m_Score(0), m_TailLength(0), m_PlayerPos({(MAP_WIDTH / 2), (MAP_HEIGHT / 2)}),
@@ -13,6 +16,8 @@ Game::Game()
 	keypad(stdscr, TRUE);
 	nodelay(stdscr, TRUE);
 	noecho();
+
+	stateMachine->PushState(std::unique_ptr<State>(new MenuState));
 }
 
 Game::~Game()

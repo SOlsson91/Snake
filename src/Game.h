@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 struct V2
 {
@@ -17,6 +18,8 @@ enum Direction
 	DOWN = 4
 };
 
+class StateMachine;
+
 class Game
 {
 public:
@@ -27,6 +30,8 @@ public:
 	void GetInput();
 	bool IsGameOver();
 	void Sleep();
+
+	static std::unique_ptr<StateMachine> stateMachine;
 private:
 	void SetRandomFruitLocation();
 	bool DrawTail(int x, int y);
