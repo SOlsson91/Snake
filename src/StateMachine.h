@@ -7,11 +7,7 @@
 
 class State
 {
-private:
-	std::string m_Name;
 public:
-	virtual const std::string& GetName() { return this->m_Name; };
-	virtual void SetName(const std::string& name) { this->m_Name = name; };
 	virtual ~State() {};
 	virtual void OnEnter() {};
 	virtual void OnExit() {};
@@ -33,5 +29,4 @@ public:
 	void Render();
 	void ProcessInput();
 	const State& GetActiveState();
-	const std::string& GetActiveStateName();
 };

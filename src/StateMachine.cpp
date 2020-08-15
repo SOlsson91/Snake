@@ -50,8 +50,3 @@ const State& StateMachine::GetActiveState()
 {
 	return *this->states.top();
 }
-
-const std::string& StateMachine::GetActiveStateName()
-{
-	return this->states.top()->GetName();
-}

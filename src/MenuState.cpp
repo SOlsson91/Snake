@@ -4,13 +4,10 @@
 #include "GameState.h"
 
 MenuState::MenuState()
-{
-	SetName("MenuState");
-}
+{ }
 
 MenuState::~MenuState()
-{
-}
+{ }
 
 void MenuState::OnEnter()
 {
