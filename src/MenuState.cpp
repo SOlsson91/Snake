@@ -9,14 +9,6 @@ MenuState::MenuState()
 MenuState::~MenuState()
 { }
 
-void MenuState::OnEnter()
-{
-}
-
-void MenuState::OnExit()
-{
-}
-
 void MenuState::Update(float dt)
 {
 }

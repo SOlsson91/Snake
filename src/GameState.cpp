@@ -14,14 +14,6 @@ GameState::~GameState()
 {
 }
 
-void GameState::OnEnter()
-{
-}
-
-void GameState::OnExit()
-{
-}
-
 void GameState::Update(float dt)
 {
 	V2 prevPos = m_PlayerPos;
