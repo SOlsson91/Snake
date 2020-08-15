@@ -153,7 +153,7 @@ bool GameState::DrawTail(int x, int y)
 
 void GameState::DrawScore()
 {
-	move(MAP_HEIGHT / 2, MAP_WIDTH + 1);
+	move(MAP_HEIGHT + 2, MAP_WIDTH / 2);
 	printw("Score: %d", m_Score);
 }
 
