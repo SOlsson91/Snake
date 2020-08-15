@@ -15,7 +15,7 @@ Game::Game()
 	nodelay(stdscr, TRUE);
 	noecho();
 
-	stateMachine->PushState(std::unique_ptr<State>(new GameState));
+	stateMachine->PushState(std::unique_ptr<State>(new MenuState));
 }
 
 Game::~Game()

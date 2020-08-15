@@ -104,13 +104,11 @@ void GameState::Render()
 			}
 		}
 	}
-	DrawInfo();
 	DrawScore();
 }
 
 void GameState::ProcessInput()
 {
-	move(m_PlayerPos.y, m_PlayerPos.x);
 	int key = getch();
 	switch (key)
 	{
@@ -157,23 +155,6 @@ void GameState::DrawScore()
 {
 	move(MAP_HEIGHT / 2, MAP_WIDTH + 1);
 	printw("Score: %d", m_Score);
-}
-
-void GameState::DrawInfo()
-{
-	int i = 0;
-	move(i++, MAP_WIDTH + 1);
-	printw("Movement");
-	move(i++, MAP_WIDTH + 1);
-	printw("Left = 'A' / Left-arrow");
-	move(i++, MAP_WIDTH + 1);
-	printw("Right = 'D' / Right-arrow");
-	move(i++, MAP_WIDTH + 1);
-	printw("Up = 'W' / Up-arrow");
-	move(i++, MAP_WIDTH + 1);
-	printw("Down = 'S' / Down-arrow");
-	move(i++, MAP_WIDTH + 1);
-	printw("Quit = 'Q'");
 }
 
 void GameState::SetRandomFruitLocation()

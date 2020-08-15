@@ -20,9 +20,6 @@ enum Direction
 class GameState : public State
 {
 private:
-	const int MAP_WIDTH = 50;
-	const int MAP_HEIGHT = 20;
-
 	int m_Score;
 	int m_TailLength;
 	V2 m_PlayerPos;

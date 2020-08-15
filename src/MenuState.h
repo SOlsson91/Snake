@@ -10,6 +10,8 @@ enum MENU_OPTIONS
 
 class MenuState : public State
 {
+private:
+	void DrawInfo();
 public:
 	MenuState();
 	~MenuState();
