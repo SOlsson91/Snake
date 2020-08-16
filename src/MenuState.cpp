@@ -9,7 +9,7 @@ MenuState::MenuState()
 MenuState::~MenuState()
 { }
 
-void MenuState::Update(float dt)
+void MenuState::Update(float)
 {
 }
 

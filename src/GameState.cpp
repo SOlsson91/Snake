@@ -14,7 +14,7 @@ GameState::~GameState()
 {
 }
 
-void GameState::Update(float dt)
+void GameState::Update(float)
 {
 	V2 prevPos = m_PlayerPos;
 	m_Tail[0] = m_PlayerPos;
