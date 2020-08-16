@@ -20,7 +20,6 @@ private:
 	std::stack<std::unique_ptr<State>> states;
 public:
 	StateMachine();
-	~StateMachine();
 	void PushState(std::unique_ptr<State> state);
 	void PopState();
 	void Update(float dt);

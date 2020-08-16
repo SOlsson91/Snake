@@ -34,7 +34,6 @@ private:
 
 public:
 	GameState();
-	~GameState();
 	void Update(float dt) override;
 	void Render() override;
 	void ProcessInput() override;

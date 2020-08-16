@@ -6,9 +6,6 @@
 MenuState::MenuState()
 { }
 
-MenuState::~MenuState()
-{ }
-
 void MenuState::Update(float)
 {
 }

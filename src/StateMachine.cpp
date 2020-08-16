@@ -3,9 +3,6 @@
 StateMachine::StateMachine()
 {}
 
-StateMachine::~StateMachine()
-{}
-
 void StateMachine::PushState(std::unique_ptr<State> state)
 {
 	this->states.push(std::move(state));

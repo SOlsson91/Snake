@@ -10,10 +10,6 @@ GameState::GameState()
 	SetRandomFruitLocation();
 }
 
-GameState::~GameState()
-{
-}
-
 void GameState::Update(float)
 {
 	V2 prevPos = m_PlayerPos;
