@@ -4,7 +4,7 @@
 #include "./GameState.h"
 
 
-std::unique_ptr<StateMachine> Game::stateMachine = std::make_unique<StateMachine>();
+std::unique_ptr<StateMachine> Game::stateMachine { std::make_unique<StateMachine>() };
 bool Game::s_IsRunning = true;
 
 Game::Game()
@@ -15,7 +15,7 @@ Game::Game()
 	nodelay(stdscr, TRUE);
 	noecho();
 
-	stateMachine->PushState(std::unique_ptr<State>(new MenuState));
+	stateMachine->PushState(std::make_unique<MenuState>());
 }
 
 Game::~Game()

@@ -49,7 +49,6 @@ void GameState::Update(float dt)
 		if (m_PlayerPos.x == m_Tail[i].x && m_PlayerPos.y == m_Tail[i].y)
 		{
 			m_PlayerDirection = Direction::STOP;
-
 			Game::s_IsRunning = false;
 		}
 	}

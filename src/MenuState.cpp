@@ -24,7 +24,7 @@ void MenuState::ProcessInput()
 	switch (key)
 	{
 	case 10: //ENTER
-		Game::stateMachine->PushState(std::unique_ptr<State>(new GameState));
+		Game::stateMachine->PushState(std::make_unique<GameState>());
 		break;
 	case 'q': 
 		Game::s_IsRunning = false;
