@@ -3,23 +3,19 @@
 #include "EndState.h"
 
 GameState::GameState()
-	: m_GameOver(false), m_Score(0), m_TailLength(0), m_PlayerPos({(MAP_WIDTH / 2), (MAP_HEIGHT / 2)}),
-	m_PlayerDirection(Direction::UP)
 {
-	m_Tail.push_back(m_PlayerPos);
 	srand(time(0));
-	SetRandomFruitLocation();
 }
 
 void GameState::OnEnter()
 {
 	m_PlayerPos = {MAP_WIDTH / 2, MAP_HEIGHT / 2};
-	m_PlayerDirection = Direction::DOWN;
 	m_GameOver = false;
 	m_Score = 0;
 	m_TailLength = 0;
 	m_Tail.push_back(m_PlayerPos);
 	SetRandomFruitLocation();
+	SetRandomMoveDirection();
 }
 
 void GameState::OnExit()
@@ -31,9 +27,8 @@ void GameState::OnExit()
 void GameState::Update(float)
 {
 	if (m_GameOver)
-	{
 		Game::stateMachine->PushState(std::make_unique<EndState>());
-	}
+
 	V2 prevPos = m_PlayerPos;
 	m_Tail[0] = m_PlayerPos;
 
@@ -170,5 +165,10 @@ void GameState::SetRandomFruitLocation()
 {
 	m_FruitPos.x = rand() % (MAP_WIDTH - 3) + 2;
 	m_FruitPos.y = rand() % (MAP_HEIGHT - 3) + 2;
+}
+
+void GameState::SetRandomMoveDirection()
+{
+	m_PlayerDirection = static_cast<Direction>(rand() % 4 + 1);
 }
 

@@ -5,10 +5,6 @@ EndState::EndState()
 {
 }
 
-void EndState::Update(float)
-{
-}
-
 void EndState::Render()
 {
 	clear();

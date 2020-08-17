@@ -32,6 +32,7 @@ private:
 	bool DrawTail(int x, int y);
 	void DrawScore();
 	void DrawInfo();
+	void SetRandomMoveDirection();
 
 public:
 	GameState();

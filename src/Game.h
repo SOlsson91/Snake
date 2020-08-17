@@ -19,9 +19,6 @@ public:
 	Game();
 	~Game();
 	void Run();
-	void Render();
-	void Update();
-	void GetInput();
 	void Sleep();
 
 	static std::unique_ptr<StateMachine> stateMachine;
