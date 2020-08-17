@@ -12,6 +12,8 @@ public:
 	virtual void Update(float) {};
 	virtual void Render() {};
 	virtual void ProcessInput() {};
+	virtual void OnEnter() {};
+	virtual void OnExit() {};
 };
 
 class StateMachine
@@ -26,4 +28,5 @@ public:
 	void Render();
 	void ProcessInput();
 	const State& GetActiveState();
+	int GetNumStates() const;
 };

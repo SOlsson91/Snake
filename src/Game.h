@@ -26,4 +26,5 @@ public:
 
 	static std::unique_ptr<StateMachine> stateMachine;
 	static bool s_IsRunning;
+    static unsigned int s_Score;
 };

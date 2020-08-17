@@ -1,8 +1,9 @@
 #include <ncurses.h>
 #include "GameState.h"
+#include "EndState.h"
 
 GameState::GameState()
-	: m_Score(0), m_TailLength(0), m_PlayerPos({(MAP_WIDTH / 2), (MAP_HEIGHT / 2)}),
+	: m_GameOver(false), m_Score(0), m_TailLength(0), m_PlayerPos({(MAP_WIDTH / 2), (MAP_HEIGHT / 2)}),
 	m_PlayerDirection(Direction::UP)
 {
 	m_Tail.push_back(m_PlayerPos);
@@ -10,8 +11,29 @@ GameState::GameState()
 	SetRandomFruitLocation();
 }
 
+void GameState::OnEnter()
+{
+	m_PlayerPos = {MAP_WIDTH / 2, MAP_HEIGHT / 2};
+	m_PlayerDirection = Direction::DOWN;
+	m_GameOver = false;
+	m_Score = 0;
+	m_TailLength = 0;
+	m_Tail.push_back(m_PlayerPos);
+	SetRandomFruitLocation();
+}
+
+void GameState::OnExit()
+{
+	m_Tail.clear();
+	Game::s_Score = m_Score;
+}
+
 void GameState::Update(float)
 {
+	if (m_GameOver)
+	{
+		Game::stateMachine->PushState(std::make_unique<EndState>());
+	}
 	V2 prevPos = m_PlayerPos;
 	m_Tail[0] = m_PlayerPos;
 
@@ -45,14 +67,14 @@ void GameState::Update(float)
 		if (m_PlayerPos.x == m_Tail[i].x && m_PlayerPos.y == m_Tail[i].y)
 		{
 			m_PlayerDirection = Direction::STOP;
-			Game::s_IsRunning = false;
+			m_GameOver = true;
 		}
 	}
 
 	if (m_PlayerPos.x == 0 || m_PlayerPos.x > MAP_WIDTH - 2 || m_PlayerPos.y == 0 || m_PlayerPos.y > MAP_HEIGHT - 2)
 	{
 		m_PlayerDirection = Direction::STOP;
-		Game::s_IsRunning = false;
+		m_GameOver = true;
 	}
 
 	if (m_FruitPos.x == m_PlayerPos.x && m_FruitPos.y == m_PlayerPos.y)

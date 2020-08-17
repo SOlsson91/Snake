@@ -12,6 +12,7 @@ void MenuState::Update(float)
 
 void MenuState::Render()
 {
+	clear();
 	DrawInfo();
 }
 
@@ -21,6 +22,7 @@ void MenuState::ProcessInput()
 	switch (key)
 	{
 	case 10: //ENTER
+		Game::stateMachine->PopState();
 		Game::stateMachine->PushState(std::make_unique<GameState>());
 		break;
 	case 'q': 

@@ -6,6 +6,7 @@
 
 std::unique_ptr<StateMachine> Game::stateMachine { std::make_unique<StateMachine>() };
 bool Game::s_IsRunning = true;
+unsigned int Game::s_Score = 0;
 
 Game::Game()
 {

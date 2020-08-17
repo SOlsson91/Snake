@@ -20,6 +20,7 @@ enum Direction
 class GameState : public State
 {
 private:
+	bool m_GameOver;
 	int m_Score;
 	int m_TailLength;
 	V2 m_PlayerPos;
@@ -37,4 +38,6 @@ public:
 	void Update(float dt) override;
 	void Render() override;
 	void ProcessInput() override;
+	void OnEnter() override;
+	void OnExit() override;
 };
