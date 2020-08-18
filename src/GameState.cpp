@@ -1,10 +1,10 @@
-#include <ncurses.h>
 #include "GameState.h"
 #include "EndState.h"
+#include <ncurses.h>
 
 GameState::GameState()
 {
-	srand(time(0));
+	std::mt19937 generator(m_RandomDevice());
 }
 
 void GameState::OnEnter()
@@ -163,12 +163,12 @@ void GameState::DrawScore()
 
 void GameState::SetRandomFruitLocation()
 {
-	m_FruitPos.x = rand() % (MAP_WIDTH - 3) + 2;
-	m_FruitPos.y = rand() % (MAP_HEIGHT - 3) + 2;
+	m_FruitPos.x = m_RandomDevice() % (MAP_WIDTH - 3) + 2;
+	m_FruitPos.y = m_RandomDevice() % (MAP_HEIGHT - 3) + 2;
 }
 
 void GameState::SetRandomMoveDirection()
 {
-	m_PlayerDirection = static_cast<Direction>(rand() % 4 + 1);
+	m_PlayerDirection = static_cast<Direction>(m_RandomDevice() % 4 + 1);
 }
 

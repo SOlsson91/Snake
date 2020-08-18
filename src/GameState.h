@@ -1,6 +1,7 @@
 #pragma once
-#include <vector>
 #include "StateMachine.h"
+#include <vector>
+#include <random>
 
 struct V2
 {
@@ -27,6 +28,7 @@ private:
 	V2 m_FruitPos;
 	std::vector<V2> m_Tail;
 	Direction m_PlayerDirection;
+	std::random_device m_RandomDevice;
 
 	void SetRandomFruitLocation();
 	bool DrawTail(int x, int y);
