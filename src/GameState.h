@@ -18,6 +18,13 @@ enum Direction
 	DOWN = 4
 };
 
+enum Color
+{
+	BACKGROUND = 1,
+	SNAKE = 2,
+	FRUIT = 3
+};
+
 class GameState : public State
 {
 private:

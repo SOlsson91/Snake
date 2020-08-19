@@ -8,7 +8,12 @@ GameState::GameState()
 	const int startY = 0;
 	const int startX = 0;
 	m_Window = newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX);
-	refresh();
+
+	start_color();
+	init_pair(Color::BACKGROUND, COLOR_WHITE, COLOR_BLACK);
+	init_pair(Color::SNAKE, COLOR_GREEN, COLOR_GREEN);
+	init_pair(Color::FRUIT, COLOR_RED, COLOR_RED);
+	wbkgd(m_Window, COLOR_PAIR(1));
 }
 
 void GameState::OnEnter()
@@ -20,6 +25,7 @@ void GameState::OnEnter()
 	m_Tail.push_back(m_PlayerPos);
 	SetRandomFruitLocation();
 	SetRandomMoveDirection();
+	clear();
 }
 
 void GameState::OnExit()
@@ -87,28 +93,36 @@ void GameState::Update(float)
 
 void GameState::Render()
 {
+	wclear(m_Window);
 	box(m_Window, 0, 0);
 	for (auto y = 0; y < MAP_HEIGHT; y++)
 	{
 		for (auto x = 0; x < MAP_WIDTH; x++)
 		{
-			//move(y,x);
 			if (x == 0 || x == (MAP_WIDTH - 1) || y == 0 || y == (MAP_HEIGHT - 1))
 			{
 				//printw("#");
 			}
 			else if ( y == m_PlayerPos.y && x == m_PlayerPos.x)
 			{
-				mvwprintw(m_Window, y, x, "O");
+				wattron(m_Window, COLOR_PAIR(Color::SNAKE));
+				mvwaddch(m_Window, y, x, 'O');
+				wattroff(m_Window, COLOR_PAIR(Color::SNAKE));
 			}
 			else if ( y == m_FruitPos.y && x == m_FruitPos.x)
 			{
-				mvwprintw(m_Window, y, x, "F");
+				wattron(m_Window, COLOR_PAIR(Color::FRUIT));
+				mvwaddch(m_Window, y, x, 'F');
+				wattroff(m_Window, COLOR_PAIR(Color::FRUIT));
 			}
 			else
 			{
 				if (!DrawTail(x, y))
-					mvwprintw(m_Window, y, x, " ");
+				{
+					wattron(m_Window, COLOR_PAIR(Color::BACKGROUND));
+					mvwaddch(m_Window, y, x, ' ');
+					wattroff(m_Window, COLOR_PAIR(Color::BACKGROUND));
+				}
 			}
 		}
 	}
@@ -152,7 +166,9 @@ bool GameState::DrawTail(int x, int y)
 	{
 		if (m_Tail[c].x == x && m_Tail[c].y == y)
 		{
-			mvwprintw(m_Window, m_Tail[c].y, m_Tail[c].x, "%c", 'o');
+			wattron(m_Window, COLOR_PAIR(Color::SNAKE));
+			mvwaddch(m_Window, m_Tail[c].y, m_Tail[c].x, 'o');
+			wattroff(m_Window, COLOR_PAIR(Color::SNAKE));
 			print = true;
 		}
 	}
