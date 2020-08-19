@@ -1,19 +1,22 @@
 #include "GameState.h"
 #include "EndState.h"
 #include <ncurses.h>
+#include <string.h>
 
 GameState::GameState()
 {
 	std::mt19937 generator(m_RandomDevice());
 	const int startY = 0;
 	const int startX = 0;
-	m_Window = newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX);
+	m_GameWindow = newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX);
+	m_ScoreWindow = newwin(SCORE_HEIGHT, MAP_WIDTH, MAP_HEIGHT, startX);
 
 	start_color();
 	init_pair(Color::BACKGROUND, COLOR_WHITE, COLOR_BLACK);
 	init_pair(Color::SNAKE, COLOR_GREEN, COLOR_GREEN);
 	init_pair(Color::FRUIT, COLOR_RED, COLOR_RED);
-	wbkgd(m_Window, COLOR_PAIR(1));
+	init_pair(Color::TEXT, COLOR_WHITE, COLOR_WHITE);
+	wbkgd(m_GameWindow, COLOR_PAIR(Color::BACKGROUND));
 }
 
 void GameState::OnEnter()
@@ -37,7 +40,9 @@ void GameState::OnExit()
 void GameState::Update(float)
 {
 	if (m_GameOver)
+	{
 		Game::stateMachine->PushState(std::make_unique<EndState>());
+	}
 
 	V2 prevPos = m_PlayerPos;
 	m_Tail[0] = m_PlayerPos;
@@ -93,8 +98,10 @@ void GameState::Update(float)
 
 void GameState::Render()
 {
-	wclear(m_Window);
-	box(m_Window, 0, 0);
+	wclear(m_GameWindow);
+	wclear(m_ScoreWindow);
+
+	box(m_GameWindow, 0, 0);
 	for (auto y = 0; y < MAP_HEIGHT; y++)
 	{
 		for (auto x = 0; x < MAP_WIDTH; x++)
@@ -105,29 +112,32 @@ void GameState::Render()
 			}
 			else if ( y == m_PlayerPos.y && x == m_PlayerPos.x)
 			{
-				wattron(m_Window, COLOR_PAIR(Color::SNAKE));
-				mvwaddch(m_Window, y, x, 'O');
-				wattroff(m_Window, COLOR_PAIR(Color::SNAKE));
+				wattron(m_GameWindow, COLOR_PAIR(Color::SNAKE));
+				mvwaddch(m_GameWindow, y, x, 'O');
+				wattroff(m_GameWindow, COLOR_PAIR(Color::SNAKE));
 			}
 			else if ( y == m_FruitPos.y && x == m_FruitPos.x)
 			{
-				wattron(m_Window, COLOR_PAIR(Color::FRUIT));
-				mvwaddch(m_Window, y, x, 'F');
-				wattroff(m_Window, COLOR_PAIR(Color::FRUIT));
+				wattron(m_GameWindow, COLOR_PAIR(Color::FRUIT));
+				mvwaddch(m_GameWindow, y, x, 'F');
+				wattroff(m_GameWindow, COLOR_PAIR(Color::FRUIT));
 			}
 			else
 			{
 				if (!DrawTail(x, y))
 				{
-					wattron(m_Window, COLOR_PAIR(Color::BACKGROUND));
-					mvwaddch(m_Window, y, x, ' ');
-					wattroff(m_Window, COLOR_PAIR(Color::BACKGROUND));
+					wattron(m_GameWindow, COLOR_PAIR(Color::BACKGROUND));
+					mvwaddch(m_GameWindow, y, x, ' ');
+					wattroff(m_GameWindow, COLOR_PAIR(Color::BACKGROUND));
 				}
 			}
 		}
 	}
+	box(m_ScoreWindow, 0, 0);
 	DrawScore();
-	wrefresh(m_Window);
+
+	wrefresh(m_ScoreWindow);
+	wrefresh(m_GameWindow);
 }
 
 void GameState::ProcessInput()
@@ -166,18 +176,21 @@ bool GameState::DrawTail(int x, int y)
 	{
 		if (m_Tail[c].x == x && m_Tail[c].y == y)
 		{
-			wattron(m_Window, COLOR_PAIR(Color::SNAKE));
-			mvwaddch(m_Window, m_Tail[c].y, m_Tail[c].x, 'o');
-			wattroff(m_Window, COLOR_PAIR(Color::SNAKE));
+			wattron(m_GameWindow, COLOR_PAIR(Color::SNAKE));
+			mvwaddch(m_GameWindow, m_Tail[c].y, m_Tail[c].x, 'o');
+			wattroff(m_GameWindow, COLOR_PAIR(Color::SNAKE));
 			print = true;
 		}
 	}
 	return print;
 }
-
 void GameState::DrawScore()
 {
-	mvprintw(MAP_HEIGHT + 2, MAP_WIDTH / 2, "Score: %d", m_Score);
+	const char* score = "Score: %d";
+
+	wattron(m_GameWindow, COLOR_PAIR(Color::TEXT));
+	mvwprintw(m_ScoreWindow, SCORE_HEIGHT / 2, MAP_WIDTH / 2 - strlen(score) / 2, score, m_Score);
+	wattroff(m_GameWindow, COLOR_PAIR(Color::TEXT));
 }
 
 void GameState::SetRandomFruitLocation()
