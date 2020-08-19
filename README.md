@@ -6,11 +6,11 @@ The project is created with [ncurses](https://tldp.org/HOWTO/NCURSES-Programming
 To build the project you need [CMake](https://cmake.org) V3.2 or later.
 
 ## Build & Run
-    * mkdir build
-    * cd build
-    * cmake ..
-    * make -j${nproc}
-    * ./game
+    mkdir build
+    cd build
+    cmake ..
+    make -j${nproc}
+    ./game
 
 
 ## Controls
