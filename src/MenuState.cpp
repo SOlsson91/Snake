@@ -4,15 +4,10 @@
 #include "GameState.h"
 
 MenuState::MenuState()
-{ }
-
-void MenuState::Update(float)
-{
-}
+{}
 
 void MenuState::Render()
 {
-	clear();
 	DrawInfo();
 }
 
@@ -34,14 +29,10 @@ void MenuState::ProcessInput()
 void MenuState::DrawInfo()
 {
 	int i = 0;
-	move(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2);
-	printw("#----- Snake -----#");
-	move(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2);
-	printw("By: Sebastian Olsson");
+	mvprintw(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2, "#----- Snake -----#");
+	mvprintw(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2, "By: Sebastian Olsson");
 	i++;
-	move(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2);
-	printw("To Start press 'ENTER'");
-	move(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2);
-	printw("To Quit press 'Q'");
+	mvprintw(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2, "To Start press 'ENTER'");
+	mvprintw(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2, "To Quit press 'Q'");
 }
 

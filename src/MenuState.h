@@ -14,7 +14,6 @@ private:
 	void DrawInfo();
 public:
 	MenuState();
-	void Update(float dt) override;
 	void Render() override;
 	void ProcessInput() override;
 };

@@ -10,11 +10,12 @@ unsigned int Game::s_Score = 0;
 Game::Game()
 {
 	initscr();
-	raw();
+
+	//raw();
 	keypad(stdscr, TRUE);
 	nodelay(stdscr, TRUE);
 	noecho();
-
+	//m_Window = 
 	stateMachine->PushState(std::make_unique<MenuState>());
 }
 
@@ -27,6 +28,7 @@ void Game::Run()
 {
 	while (s_IsRunning)
 	{
+		clear();
 		stateMachine->Render();
 		stateMachine->ProcessInput();
 		stateMachine->Update(0.0f);

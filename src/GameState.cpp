@@ -83,7 +83,6 @@ void GameState::Update(float)
 
 void GameState::Render()
 {
-	clear();
 	for (auto y = 0; y < MAP_HEIGHT; y++)
 	{
 		for (auto x = 0; x < MAP_WIDTH; x++)
@@ -147,8 +146,7 @@ bool GameState::DrawTail(int x, int y)
 	{
 		if (m_Tail[c].x == x && m_Tail[c].y == y)
 		{
-			move(m_Tail[c].y, m_Tail[c].x);
-			printw("o");
+			mvprintw(m_Tail[c].y, m_Tail[c].x, "%c", 'o');
 			print = true;
 		}
 	}
@@ -157,8 +155,7 @@ bool GameState::DrawTail(int x, int y)
 
 void GameState::DrawScore()
 {
-	move(MAP_HEIGHT + 2, MAP_WIDTH / 2);
-	printw("Score: %d", m_Score);
+	mvprintw(MAP_HEIGHT + 2, MAP_WIDTH / 2, "Score: %d", m_Score);
 }
 
 void GameState::SetRandomFruitLocation()

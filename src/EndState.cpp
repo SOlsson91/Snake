@@ -7,15 +7,11 @@ EndState::EndState()
 
 void EndState::Render()
 {
-	clear();
 	int i = 0;
-	move(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2);
-	printw("Score: %i", Game::s_Score);
+	mvprintw(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2, "Score: %i", Game::s_Score);
 	i++;
-	move(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2);
-	printw("To play the game again press 'ENTER'");
-	move(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2);
-	printw("To Quit press 'Q'");
+	mvprintw(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2, "To play the game again press 'ENTER'");
+	mvprintw(MAP_HEIGHT / 2 + i++, MAP_WIDTH / 2, "To Quit press 'Q'");
 }
 
 void EndState::ProcessInput()
