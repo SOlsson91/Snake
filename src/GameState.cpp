@@ -5,6 +5,10 @@
 GameState::GameState()
 {
 	std::mt19937 generator(m_RandomDevice());
+	const int startY = 0;
+	const int startX = 0;
+	m_Window = newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX);
+	refresh();
 }
 
 void GameState::OnEnter()
@@ -83,31 +87,33 @@ void GameState::Update(float)
 
 void GameState::Render()
 {
+	box(m_Window, 0, 0);
 	for (auto y = 0; y < MAP_HEIGHT; y++)
 	{
 		for (auto x = 0; x < MAP_WIDTH; x++)
 		{
-			move(y,x);
+			//move(y,x);
 			if (x == 0 || x == (MAP_WIDTH - 1) || y == 0 || y == (MAP_HEIGHT - 1))
 			{
-				printw("#");
+				//printw("#");
 			}
 			else if ( y == m_PlayerPos.y && x == m_PlayerPos.x)
 			{
-				printw("O");
+				mvwprintw(m_Window, y, x, "O");
 			}
 			else if ( y == m_FruitPos.y && x == m_FruitPos.x)
 			{
-				printw("F");
+				mvwprintw(m_Window, y, x, "F");
 			}
 			else
 			{
 				if (!DrawTail(x, y))
-					printw(" ");
+					mvwprintw(m_Window, y, x, " ");
 			}
 		}
 	}
 	DrawScore();
+	wrefresh(m_Window);
 }
 
 void GameState::ProcessInput()
@@ -146,7 +152,7 @@ bool GameState::DrawTail(int x, int y)
 	{
 		if (m_Tail[c].x == x && m_Tail[c].y == y)
 		{
-			mvprintw(m_Tail[c].y, m_Tail[c].x, "%c", 'o');
+			mvwprintw(m_Window, m_Tail[c].y, m_Tail[c].x, "%c", 'o');
 			print = true;
 		}
 	}

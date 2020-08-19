@@ -20,6 +20,7 @@ class StateMachine
 {
 private:
 	std::stack<std::unique_ptr<State>> states;
+	WINDOW* m_Window;
 public:
 	StateMachine();
 	void PushState(std::unique_ptr<State> state);
@@ -29,4 +30,6 @@ public:
 	void ProcessInput();
 	const State& GetActiveState();
 	int GetNumStates() const;
+	void SetWindow(WINDOW& window);
+	WINDOW& GetWindow() const;
 };

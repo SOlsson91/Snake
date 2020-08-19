@@ -15,7 +15,6 @@ Game::Game()
 	keypad(stdscr, TRUE);
 	nodelay(stdscr, TRUE);
 	noecho();
-	//m_Window = 
 	stateMachine->PushState(std::make_unique<MenuState>());
 }
 
@@ -28,7 +27,7 @@ void Game::Run()
 {
 	while (s_IsRunning)
 	{
-		clear();
+		//clear();
 		stateMachine->Render();
 		stateMachine->ProcessInput();
 		stateMachine->Update(0.0f);

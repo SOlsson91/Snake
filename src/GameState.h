@@ -29,6 +29,7 @@ private:
 	std::vector<V2> m_Tail;
 	Direction m_PlayerDirection;
 	std::random_device m_RandomDevice;
+	WINDOW* m_Window;
 
 	void SetRandomFruitLocation();
 	bool DrawTail(int x, int y);

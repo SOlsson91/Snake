@@ -56,3 +56,12 @@ int StateMachine::GetNumStates() const
 {
 	return this->states.size();
 }
+
+void StateMachine::SetWindow(WINDOW& window)
+{
+	this->m_Window = &window;
+}
+WINDOW& StateMachine::GetWindow() const
+{
+	return *this->m_Window;
+}
