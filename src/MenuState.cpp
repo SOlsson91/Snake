@@ -72,5 +72,8 @@ void MenuState::ProcessInput()
 	case KEY_DOWN:
 		m_Highlight = ++m_Highlight > 1 ? 0 : m_Highlight;
 		break;
+	case 'q':
+		Game::s_IsRunning = false;
+		break;
 	}
 }

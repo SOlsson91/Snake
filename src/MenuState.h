@@ -2,12 +2,6 @@
 
 #include "./StateMachine.h"
 
-enum MENU_OPTIONS
-{
-	START = 0,
-	EXIT = 1
-};
-
 class MenuState : public State
 {
 private:
@@ -20,6 +14,13 @@ private:
 
 	int m_Highlight = 0;
 	WINDOW* m_Window;
+
+	enum MENU_OPTIONS
+	{
+		START = 0,
+		EXIT = 1
+	};
+
 public:
 	MenuState();
 	void Render() override;
