@@ -7,9 +7,6 @@
 
 class StateMachine;
 
-const int MAP_WIDTH = 50;
-const int MAP_HEIGHT = 20;
-
 class Game
 {
 private:

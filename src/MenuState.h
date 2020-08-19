@@ -11,7 +11,15 @@ enum MENU_OPTIONS
 class MenuState : public State
 {
 private:
-	void DrawInfo();
+	const int MAP_WIDTH = 40;
+	const int MAP_HEIGHT = 20;
+	const char * header = "#----- Snake -----#";
+	const char * subheader = "By: Sebastian Olsson";
+	const char * start = "Start";
+	const char * quit = "Quit";
+
+	int m_Highlight = 0;
+	WINDOW* m_Window;
 public:
 	MenuState();
 	void Render() override;

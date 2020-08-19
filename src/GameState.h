@@ -30,6 +30,8 @@ class GameState : public State
 {
 private:
 	const int SCORE_HEIGHT = 4;
+	const int MAP_WIDTH = 50;
+	const int MAP_HEIGHT = 20;
 	bool m_GameOver;
 	int m_Score;
 	int m_TailLength;

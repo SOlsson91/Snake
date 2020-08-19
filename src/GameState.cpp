@@ -6,10 +6,12 @@
 GameState::GameState()
 {
 	std::mt19937 generator(m_RandomDevice());
-	const int startY = 0;
-	const int startX = 0;
+	int maxX, maxY;
+	getmaxyx(stdscr, maxY, maxX);
+	const int startY = maxY / 2 - MAP_HEIGHT / 2;
+	const int startX = maxX / 2 - MAP_WIDTH / 2;
 	m_GameWindow = newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX);
-	m_ScoreWindow = newwin(SCORE_HEIGHT, MAP_WIDTH, MAP_HEIGHT, startX);
+	m_ScoreWindow = newwin(SCORE_HEIGHT, MAP_WIDTH, startY + MAP_HEIGHT, startX);
 
 	start_color();
 	init_pair(Color::BACKGROUND, COLOR_WHITE, COLOR_BLACK);
