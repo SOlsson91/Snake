@@ -4,9 +4,10 @@
 #include <ncurses.h>
 #include <string.h>
 
-MenuState::MenuState()
+MenuState::MenuState(Game* game)
 	: m_Highlight(0)
 {
+	m_Game = game;
 	int maxY, maxX;
 	getmaxyx(stdscr, maxY, maxX);
 	const int startY = maxY / 2 - MAP_HEIGHT / 2;
@@ -58,12 +59,12 @@ void MenuState::ProcessInput()
 	case 10: //ENTER
 		if (m_Highlight == MENU_OPTIONS::START)
 		{
-			Game::stateMachine->PopState();
-			Game::stateMachine->PushState(std::make_unique<GameState>());
+			m_Game->GetStateMachine()->PopState();
+			m_Game->GetStateMachine()->PushState(std::make_unique<GameState>(m_Game));
 		}
 		else if (m_Highlight == MENU_OPTIONS::EXIT)
 		{
-			Game::s_IsRunning = false;
+			m_Game->SetIsRunning(false);
 		}
 		break;
 	case KEY_UP:
@@ -73,7 +74,7 @@ void MenuState::ProcessInput()
 		m_Highlight = ++m_Highlight > 1 ? 0 : m_Highlight;
 		break;
 	case 'q':
-		Game::s_IsRunning = false;
+		m_Game->SetIsRunning(false);
 		break;
 	}
 }

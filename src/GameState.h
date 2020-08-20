@@ -42,6 +42,7 @@ private:
 	std::random_device m_RandomDevice;
 	WINDOW* m_GameWindow;
 	WINDOW* m_ScoreWindow;
+	Game* m_Game;
 
 	void SetRandomFruitLocation();
 	bool DrawTail(int x, int y);
@@ -50,7 +51,7 @@ private:
 	void SetRandomMoveDirection();
 
 public:
-	GameState();
+	GameState(Game* game);
 	void Update(float dt) override;
 	void Render() override;
 	void ProcessInput() override;

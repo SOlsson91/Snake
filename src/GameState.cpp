@@ -3,7 +3,8 @@
 #include <ncurses.h>
 #include <string.h>
 
-GameState::GameState()
+GameState::GameState(Game* game)
+	: m_Game(game)
 {
 	std::mt19937 generator(m_RandomDevice());
 	int maxX, maxY;
@@ -36,14 +37,14 @@ void GameState::OnEnter()
 void GameState::OnExit()
 {
 	m_Tail.clear();
-	Game::s_Score = m_Score;
+	m_Game->SetScore(m_Score);
 }
 
 void GameState::Update(float)
 {
 	if (m_GameOver)
 	{
-		Game::stateMachine->PushState(std::make_unique<EndState>());
+		m_Game->GetStateMachine()->PushState(std::make_unique<EndState>(m_Game));
 	}
 
 	V2 prevPos = m_PlayerPos;
@@ -165,7 +166,7 @@ void GameState::ProcessInput()
 		break;
 	case 'q': case KEY_EXIT:
 		m_PlayerDirection = Direction::STOP;
-		Game::s_IsRunning = false;
+		m_Game->SetIsRunning(false);
 		break;
 	}
 }

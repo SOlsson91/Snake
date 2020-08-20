@@ -3,7 +3,8 @@
 
 #include <string.h>
 
-EndState::EndState()
+EndState::EndState(Game* game)
+	: m_Game(game)
 {
 	int maxX, maxY;
 	getmaxyx(stdscr, maxY, maxX);
@@ -25,7 +26,7 @@ void EndState::Render()
 
 	const char* score = "Score %i";
 	wattron(m_Window, COLOR_PAIR(Color::BACKGROUND));
-	mvwprintw(m_Window, MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(score) / 2, score, Game::s_Score);
+	mvwprintw(m_Window, MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(score) / 2, score, m_Game->GetScore());
 	wattroff(m_Window, COLOR_PAIR(Color::BACKGROUND));
 	i++;
 
@@ -55,11 +56,11 @@ void EndState::ProcessInput()
 	case 10: //ENTER
 		if (m_Highlight == MENU_OPTIONS::START)
 		{
-			Game::stateMachine->PopState();
+			m_Game->GetStateMachine()->PopState();
 		}
 		else if(m_Highlight == MENU_OPTIONS::EXIT)
 		{
-			Game::s_IsRunning = false;
+			m_Game->SetIsRunning(false);
 		}
 		break;
 	case KEY_UP:
@@ -69,7 +70,7 @@ void EndState::ProcessInput()
 		m_Highlight = ++m_Highlight > 1 ? 0 : m_Highlight;
 		break;
 	case 'q':
-		Game::s_IsRunning = false;
+		m_Game->SetIsRunning(false);
 		break;
 	}
 }

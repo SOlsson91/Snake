@@ -20,9 +20,10 @@ private:
 		START = 0,
 		EXIT = 1
 	};
+	Game* m_Game;
 
 public:
-	MenuState();
+	MenuState(Game* game);
 	void Render() override;
 	void ProcessInput() override;
 };

@@ -3,11 +3,8 @@
 #include "./MenuState.h"
 #include "./GameState.h"
 
-std::unique_ptr<StateMachine> Game::stateMachine { std::make_unique<StateMachine>() };
-bool Game::s_IsRunning = true;
-unsigned int Game::s_Score = 0;
-
 Game::Game()
+	: m_StateMachine(std::make_shared<StateMachine>()), m_IsRunning(true), m_Score(0)
 {
 	initscr();
 	raw();
@@ -15,7 +12,7 @@ Game::Game()
 	nodelay(stdscr, TRUE);
 	curs_set(0);
 	noecho();
-	stateMachine->PushState(std::make_unique<MenuState>());
+	m_StateMachine->PushState(std::make_unique<MenuState>(this));
 }
 
 Game::~Game()
@@ -28,13 +25,13 @@ void Game::Run()
 	if (!has_colors())
 	{
 		printw("Terminal does not support color");
-		s_IsRunning = false;
+		m_IsRunning = false;
 	}
-	while (s_IsRunning)
+	while (m_IsRunning)
 	{
-		stateMachine->Render();
-		stateMachine->ProcessInput();
-		stateMachine->Update(0.0f);
+		m_StateMachine->Render();
+		m_StateMachine->ProcessInput();
+		m_StateMachine->Update(0.0f);
 		Sleep();
 	}
 }
@@ -43,4 +40,29 @@ void Game::Sleep()
 {
 	refresh();
 	usleep(m_UpdatedPerSec * CONVERT_TO_SECONDS);
+}
+
+std::shared_ptr<StateMachine> Game::GetStateMachine() const
+{
+	return m_StateMachine;
+}
+
+bool Game::GetIsRunning() const
+{
+	return m_IsRunning;
+}
+
+void Game::SetIsRunning(bool running)
+{
+	m_IsRunning = running;
+}
+
+void Game::SetScore(int score)
+{
+	m_Score = score;
+}
+
+int Game::GetScore() const
+{
+	return m_Score;
 }
