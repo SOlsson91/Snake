@@ -7,13 +7,18 @@
 Game::Game()
 	: m_StateMachine(std::make_shared<StateMachine>()), m_IsRunning(true), m_Score(0)
 {
+	m_StateMachine->PushState(std::make_unique<MenuState>(this));
+}
+
+void Game::InitNcurses() const
+{
 	initscr();
 	raw();
 	keypad(stdscr, TRUE);
 	nodelay(stdscr, TRUE);
 	curs_set(0);
 	noecho();
-	m_StateMachine->PushState(std::make_unique<MenuState>(this));
+
 	start_color();
 	init_pair(Colors::BackgroundColor, COLOR_WHITE, COLOR_BLACK);
 	init_pair(Colors::SnakeColor, COLOR_GREEN, COLOR_GREEN);

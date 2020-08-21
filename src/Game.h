@@ -13,6 +13,8 @@ private:
 	std::shared_ptr<StateMachine> m_StateMachine;
 	bool m_IsRunning;
     unsigned int m_Score;
+
+	void InitNcurses() const;
 public:
 	Game();
 	~Game();

@@ -25,8 +25,6 @@ private:
 	void SetRandomFruitLocation();
 	void DrawTail(int x, int y);
 	void DrawScore();
-	void DrawInfo();
-	void SetRandomMoveDirection();
 
 public:
 	GameState(Game* game);

@@ -9,8 +9,8 @@ GameState::GameState(Game* game)
 	std::mt19937 generator(m_RandomDevice());
 	int maxX, maxY;
 	getmaxyx(stdscr, maxY, maxX);
-	const int startY = maxY / 2 - MAP_HEIGHT / 2;
 	const int startX = maxX / 2 - MAP_WIDTH / 2;
+	const int startY = maxY / 2 - MAP_HEIGHT / 2;
 	m_GameWindow = static_cast<std::unique_ptr<WINDOW>>(newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX));
 	m_ScoreWindow = static_cast<std::unique_ptr<WINDOW>>(newwin(SCORE_HEIGHT, MAP_WIDTH, startY + MAP_HEIGHT, startX));
 }
@@ -27,9 +27,8 @@ void GameState::OnEnter()
 	m_GameOver = false;
 	m_Score = 0;
 	m_TailLength = 0;
-	//m_Tail.push_back(m_PlayerPos);
 	SetRandomFruitLocation();
-	SetRandomMoveDirection();
+	m_PlayerDirection = static_cast<Direction>(m_RandomDevice() % 4 + 1);
 	clear();
 }
 
@@ -47,8 +46,6 @@ void GameState::Update(float)
 	}
 
 	V2 prevPos = m_PlayerPos;
-	//m_Tail[0] = m_PlayerPos;
-
 	for (auto i = 0; i < m_TailLength; ++i)
 	{
 		V2 tempPos = m_Tail[i];
@@ -184,9 +181,3 @@ void GameState::SetRandomFruitLocation()
 	m_FruitPos.x = m_RandomDevice() % (MAP_WIDTH - 3) + 2;
 	m_FruitPos.y = m_RandomDevice() % (MAP_HEIGHT - 3) + 2;
 }
-
-void GameState::SetRandomMoveDirection()
-{
-	m_PlayerDirection = static_cast<Direction>(m_RandomDevice() % 4 + 1);
-}
-
