@@ -2,6 +2,10 @@
 
 #include "Game.h"
 #include "StateMachine.h"
+#include "Constants.h"
+
+#include <curses.h>
+#include <menu.h>
 
 class EndState : public State
 {

@@ -15,9 +15,9 @@ MenuState::MenuState(Game* game)
 	m_Window = static_cast<std::unique_ptr<WINDOW>>(newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX));
 
 	start_color();
-	init_pair(Color::BACKGROUND, COLOR_WHITE, COLOR_BLACK);
-	init_pair(Color::TEXT, COLOR_BLACK, COLOR_WHITE);
-	wbkgd(m_Window.get(), COLOR_PAIR(Color::BACKGROUND));
+	init_pair(Colors::BackgroundColor, COLOR_WHITE, COLOR_BLACK);
+	init_pair(Colors::TextColor, COLOR_BLACK, COLOR_WHITE);
+	wbkgd(m_Window.get(), COLOR_PAIR(Colors::BackgroundColor));
 }
 
 MenuState::~MenuState()
@@ -31,23 +31,23 @@ void MenuState::Render()
 	box(m_Window.get(), 0, 0);
 	int i = 0;
 
-	wattron(m_Window.get(), COLOR_PAIR(Color::BACKGROUND));
+	wattron(m_Window.get(), COLOR_PAIR(Colors::BackgroundColor));
 	mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(header) / 2, header);
 	mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(subheader) / 2, subheader);
-	wattroff(m_Window.get(), COLOR_PAIR(Color::BACKGROUND));
+	wattroff(m_Window.get(), COLOR_PAIR(Colors::BackgroundColor));
 	i++;
 
 	// NOTE: Wow... This was a ugly hack... To tired to work out a propper solution right now. Will get back to this
 	// TODO
 	switch (m_Highlight)
 	{
-	case MENU_OPTIONS::START:
+	case MenuOptions::Start:
 		wattron(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(start) / 2, start);
 		wattroff(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
 	break;
-	case MENU_OPTIONS::EXIT:
+	case MenuOptions::Exit:
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(start) / 2, start);
 		wattron(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
@@ -62,12 +62,12 @@ void MenuState::ProcessInput()
 	switch (getch())
 	{
 	case 10: //ENTER
-		if (m_Highlight == MENU_OPTIONS::START)
+		if (m_Highlight == MenuOptions::Start)
 		{
 			m_Game->GetStateMachine()->PopState();
 			m_Game->GetStateMachine()->PushState(std::make_unique<GameState>(m_Game));
 		}
-		else if (m_Highlight == MENU_OPTIONS::EXIT)
+		else if (m_Highlight == MenuOptions::Exit)
 		{
 			m_Game->SetIsRunning(false);
 		}

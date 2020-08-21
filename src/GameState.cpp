@@ -15,11 +15,11 @@ GameState::GameState(Game* game)
 	m_ScoreWindow = static_cast<std::unique_ptr<WINDOW>>(newwin(SCORE_HEIGHT, MAP_WIDTH, startY + MAP_HEIGHT, startX));
 
 	start_color();
-	init_pair(Color::BACKGROUND, COLOR_WHITE, COLOR_BLACK);
-	init_pair(Color::SNAKE, COLOR_GREEN, COLOR_GREEN);
-	init_pair(Color::FRUIT, COLOR_RED, COLOR_RED);
-	init_pair(Color::TEXT, COLOR_WHITE, COLOR_WHITE);
-	wbkgd(m_GameWindow.get(), COLOR_PAIR(Color::BACKGROUND));
+	init_pair(Colors::BackgroundColor, COLOR_WHITE, COLOR_BLACK);
+	init_pair(Colors::SnakeColor, COLOR_GREEN, COLOR_GREEN);
+	init_pair(Colors::FruitColor, COLOR_RED, COLOR_RED);
+	init_pair(Colors::TextColor, COLOR_WHITE, COLOR_WHITE);
+	wbkgd(m_GameWindow.get(), COLOR_PAIR(Colors::BackgroundColor));
 }
 
 GameState::~GameState()
@@ -65,19 +65,19 @@ void GameState::Update(float)
 
 	switch (m_PlayerDirection)
 	{
-	case UP:
+	case Direction::Up:
 		m_PlayerPos.y--;
 		break;
-	case DOWN:
+	case Direction::Down:
 		m_PlayerPos.y++;
 		break;
-	case LEFT:
+	case Direction::Left:
 		m_PlayerPos.x--;
 		break;
-	case RIGHT:
+	case Direction::Right:
 		m_PlayerPos.x++;
 		break;
-	default: case STOP:
+	default: case Direction::Stop:
 		break;
 	}
 
@@ -85,14 +85,14 @@ void GameState::Update(float)
 	{
 		if (m_PlayerPos.x == m_Tail[i].x && m_PlayerPos.y == m_Tail[i].y)
 		{
-			m_PlayerDirection = Direction::STOP;
+			m_PlayerDirection = Direction::Stop;
 			m_GameOver = true;
 		}
 	}
 
 	if (m_PlayerPos.x == 0 || m_PlayerPos.x > MAP_WIDTH - 2 || m_PlayerPos.y == 0 || m_PlayerPos.y > MAP_HEIGHT - 2)
 	{
-		m_PlayerDirection = Direction::STOP;
+		m_PlayerDirection = Direction::Stop;
 		m_GameOver = true;
 	}
 
@@ -121,23 +121,23 @@ void GameState::Render()
 			}
 			else if ( y == m_PlayerPos.y && x == m_PlayerPos.x)
 			{
-				wattron(m_GameWindow.get(), COLOR_PAIR(Color::SNAKE));
+				wattron(m_GameWindow.get(), COLOR_PAIR(Colors::SnakeColor));
 				mvwaddch(m_GameWindow.get(), y, x, 'O');
-				wattroff(m_GameWindow.get(), COLOR_PAIR(Color::SNAKE));
+				wattroff(m_GameWindow.get(), COLOR_PAIR(Colors::SnakeColor));
 			}
 			else if ( y == m_FruitPos.y && x == m_FruitPos.x)
 			{
-				wattron(m_GameWindow.get(), COLOR_PAIR(Color::FRUIT));
+				wattron(m_GameWindow.get(), COLOR_PAIR(Colors::FruitColor));
 				mvwaddch(m_GameWindow.get(), y, x, 'F');
-				wattroff(m_GameWindow.get(), COLOR_PAIR(Color::FRUIT));
+				wattroff(m_GameWindow.get(), COLOR_PAIR(Colors::FruitColor));
 			}
 			else
 			{
 				if (!DrawTail(x, y))
 				{
-					wattron(m_GameWindow.get(), COLOR_PAIR(Color::BACKGROUND));
+					wattron(m_GameWindow.get(), COLOR_PAIR(Colors::BackgroundColor));
 					mvwaddch(m_GameWindow.get(), y, x, ' ');
-					wattroff(m_GameWindow.get(), COLOR_PAIR(Color::BACKGROUND));
+					wattroff(m_GameWindow.get(), COLOR_PAIR(Colors::BackgroundColor));
 				}
 			}
 		}
@@ -155,23 +155,23 @@ void GameState::ProcessInput()
 	switch (key)
 	{
 	case KEY_UP : case 'w':
-		if (m_PlayerDirection != Direction::DOWN)
-			m_PlayerDirection = Direction::UP;
+		if (m_PlayerDirection != Direction::Down)
+			m_PlayerDirection = Direction::Up;
 		break;
 	case KEY_DOWN : case 's':
-		if (m_PlayerDirection != Direction::UP)
-			m_PlayerDirection = Direction::DOWN;
+		if (m_PlayerDirection != Direction::Up)
+			m_PlayerDirection = Direction::Down;
 		break;
 	case KEY_LEFT : case 'a':
-		if (m_PlayerDirection != Direction::RIGHT)
-			m_PlayerDirection = Direction::LEFT;
+		if (m_PlayerDirection != Direction::Right)
+			m_PlayerDirection = Direction::Left;
 		break;
 	case KEY_RIGHT : case 'd':
-		if (m_PlayerDirection != Direction::LEFT)
-			m_PlayerDirection = Direction::RIGHT;
+		if (m_PlayerDirection != Direction::Left)
+			m_PlayerDirection = Direction::Right;
 		break;
 	case 'q': case KEY_EXIT:
-		m_PlayerDirection = Direction::STOP;
+		m_PlayerDirection = Direction::Stop;
 		m_Game->SetIsRunning(false);
 		break;
 	}
@@ -185,9 +185,9 @@ bool GameState::DrawTail(int x, int y)
 	{
 		if (m_Tail[c].x == x && m_Tail[c].y == y)
 		{
-			wattron(m_GameWindow.get(), COLOR_PAIR(Color::SNAKE));
+			wattron(m_GameWindow.get(), COLOR_PAIR(Colors::SnakeColor));
 			mvwaddch(m_GameWindow.get(), m_Tail[c].y, m_Tail[c].x, 'o');
-			wattroff(m_GameWindow.get(), COLOR_PAIR(Color::SNAKE));
+			wattroff(m_GameWindow.get(), COLOR_PAIR(Colors::SnakeColor));
 			print = true;
 		}
 	}
@@ -197,9 +197,9 @@ void GameState::DrawScore()
 {
 	const char* score = "Score: %d";
 
-	wattron(m_GameWindow.get(), COLOR_PAIR(Color::TEXT));
+	wattron(m_GameWindow.get(), COLOR_PAIR(Colors::TextColor));
 	mvwprintw(m_ScoreWindow.get(), SCORE_HEIGHT / 2, MAP_WIDTH / 2 - strlen(score) / 2, score, m_Score);
-	wattroff(m_GameWindow.get(), COLOR_PAIR(Color::TEXT));
+	wattroff(m_GameWindow.get(), COLOR_PAIR(Colors::TextColor));
 }
 
 void GameState::SetRandomFruitLocation()
