@@ -23,7 +23,7 @@ private:
 	Game* m_Game;
 
 	void SetRandomFruitLocation();
-	bool DrawTail(int x, int y);
+	void DrawTail(int x, int y);
 	void DrawScore();
 	void DrawInfo();
 	void SetRandomMoveDirection();

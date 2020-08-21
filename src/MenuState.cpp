@@ -13,11 +13,6 @@ MenuState::MenuState(Game* game)
 	const int startY = maxY / 2 - MAP_HEIGHT / 2;
 	const int startX = maxX / 2 - MAP_WIDTH / 2;
 	m_Window = static_cast<std::unique_ptr<WINDOW>>(newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX));
-
-	start_color();
-	init_pair(Colors::BackgroundColor, COLOR_WHITE, COLOR_BLACK);
-	init_pair(Colors::TextColor, COLOR_BLACK, COLOR_WHITE);
-	wbkgd(m_Window.get(), COLOR_PAIR(Colors::BackgroundColor));
 }
 
 MenuState::~MenuState()

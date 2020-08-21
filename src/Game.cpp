@@ -1,7 +1,8 @@
-#include <unistd.h>
 #include "./Game.h"
 #include "./MenuState.h"
 #include "./GameState.h"
+#include <chrono>
+#include <thread>
 
 Game::Game()
 	: m_StateMachine(std::make_shared<StateMachine>()), m_IsRunning(true), m_Score(0)
@@ -13,6 +14,11 @@ Game::Game()
 	curs_set(0);
 	noecho();
 	m_StateMachine->PushState(std::make_unique<MenuState>(this));
+	start_color();
+	init_pair(Colors::BackgroundColor, COLOR_WHITE, COLOR_BLACK);
+	init_pair(Colors::SnakeColor, COLOR_GREEN, COLOR_GREEN);
+	init_pair(Colors::FruitColor, COLOR_RED, COLOR_RED);
+	init_pair(Colors::TextColor, COLOR_WHITE, COLOR_WHITE);
 }
 
 Game::~Game()
@@ -32,14 +38,10 @@ void Game::Run()
 		m_StateMachine->Render();
 		m_StateMachine->ProcessInput();
 		m_StateMachine->Update(0.0f);
-		Sleep();
-	}
-}
 
-void Game::Sleep()
-{
-	refresh();
-	usleep(m_UpdatedPerSec * CONVERT_TO_SECONDS);
+		refresh();
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
 }
 
 std::shared_ptr<StateMachine> Game::GetStateMachine() const
