@@ -1,6 +1,6 @@
-#include "./Game.h"
-#include "./MenuState.h"
-#include "./GameState.h"
+#include "Game.h"
+#include "MenuState.h"
+#include "GameState.h"
 #include <chrono>
 #include <thread>
 

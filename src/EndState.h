@@ -17,11 +17,6 @@ private:
 	int m_Highlight = 0;
 
 	std::unique_ptr<WINDOW> m_Window;
-	enum MENU_OPTIONS
-	{
-		START = 0,
-		EXIT = 1
-	};
 	Game* m_Game;
 
 public:
