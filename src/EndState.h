@@ -12,7 +12,7 @@ private:
 	const char* quit = "Quit";
 	int m_Highlight = 0;
 
-	WINDOW* m_Window;
+	std::unique_ptr<WINDOW> m_Window;
 	enum MENU_OPTIONS
 	{
 		START = 0,
@@ -22,6 +22,7 @@ private:
 
 public:
 	EndState(Game* game);
+	~EndState();
 	void Render() override;
 	void ProcessInput() override;
 };

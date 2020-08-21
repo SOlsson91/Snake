@@ -40,8 +40,8 @@ private:
 	std::vector<V2> m_Tail;
 	Direction m_PlayerDirection;
 	std::random_device m_RandomDevice;
-	WINDOW* m_GameWindow;
-	WINDOW* m_ScoreWindow;
+	std::unique_ptr<WINDOW> m_GameWindow;
+	std::unique_ptr<WINDOW> m_ScoreWindow;
 	Game* m_Game;
 
 	void SetRandomFruitLocation();
@@ -52,6 +52,7 @@ private:
 
 public:
 	GameState(Game* game);
+	~GameState();
 	void Update(float dt) override;
 	void Render() override;
 	void ProcessInput() override;

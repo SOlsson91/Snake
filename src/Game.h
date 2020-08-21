@@ -12,7 +12,6 @@ class Game
 private:
 	const double m_UpdatedPerSec = 0.1;
 	const unsigned int CONVERT_TO_SECONDS = 1'000'000;
-	WINDOW* m_Window;
 	std::shared_ptr<StateMachine> m_StateMachine;
 	bool m_IsRunning;
     unsigned int m_Score;

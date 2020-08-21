@@ -10,43 +10,48 @@ EndState::EndState(Game* game)
 	getmaxyx(stdscr, maxY, maxX);
 	const int startY = maxY / 2 - MAP_HEIGHT / 2;
 	const int startX = maxX / 2 - MAP_WIDTH / 2;
-	m_Window = newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX);
+	m_Window = static_cast<std::unique_ptr<WINDOW>>(newwin(MAP_HEIGHT, MAP_WIDTH, startY, startX));
 
 	start_color();
 	init_pair(Color::BACKGROUND, COLOR_WHITE, COLOR_BLACK);
 	init_pair(Color::TEXT, COLOR_BLACK, COLOR_WHITE);
-	wbkgd(m_Window, COLOR_PAIR(Color::BACKGROUND));
+	wbkgd(m_Window.get(), COLOR_PAIR(Color::BACKGROUND));
+}
+
+EndState::~EndState()
+{
+	m_Window.release();
 }
 
 void EndState::Render()
 {
-	wclear(m_Window);
-	box(m_Window, 0, 0);
+	wclear(m_Window.get());
+	box(m_Window.get(), 0, 0);
 	int i = 0;
 
 	const char* score = "Score %i";
-	wattron(m_Window, COLOR_PAIR(Color::BACKGROUND));
-	mvwprintw(m_Window, MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(score) / 2, score, m_Game->GetScore());
-	wattroff(m_Window, COLOR_PAIR(Color::BACKGROUND));
+	wattron(m_Window.get(), COLOR_PAIR(Color::BACKGROUND));
+	mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(score) / 2, score, m_Game->GetScore());
+	wattroff(m_Window.get(), COLOR_PAIR(Color::BACKGROUND));
 	i++;
 
 
 	switch (m_Highlight)
 	{
 	case MENU_OPTIONS::START:
-		wattron(m_Window, A_REVERSE);
-		mvwprintw(m_Window, MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
-		wattroff(m_Window, A_REVERSE);
-		mvwprintw(m_Window, MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
+		wattron(m_Window.get(), A_REVERSE);
+		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
+		wattroff(m_Window.get(), A_REVERSE);
+		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
 	break;
 	case MENU_OPTIONS::EXIT:
-		mvwprintw(m_Window, MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
-		wattron(m_Window, A_REVERSE);
-		mvwprintw(m_Window, MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
-		wattroff(m_Window, A_REVERSE);
+		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
+		wattron(m_Window.get(), A_REVERSE);
+		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
+		wattroff(m_Window.get(), A_REVERSE);
 	break;
 	}
-	wrefresh(m_Window);
+	wrefresh(m_Window.get());
 }
 
 void EndState::ProcessInput()
