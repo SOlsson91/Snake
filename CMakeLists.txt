@@ -17,4 +17,5 @@ add_executable(game ${SOURCE})
 
 target_link_libraries(game 
 	-lcurses
+	-lmenu
 )
