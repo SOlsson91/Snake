@@ -33,18 +33,18 @@ void EndState::Render()
 
 	switch (m_Highlight)
 	{
-	case MENU_OPTIONS::START:
+	case EndMenuOptions::Restart:
 		wattron(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
 		wattroff(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
-	break;
-	case MENU_OPTIONS::EXIT:
+		break;
+	case EndMenuOptions::Quit:
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
 		wattron(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
 		wattroff(m_Window.get(), A_REVERSE);
-	break;
+		break;
 	}
 	wrefresh(m_Window.get());
 }

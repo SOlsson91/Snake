@@ -5,9 +5,8 @@
 #include <string.h>
 
 MenuState::MenuState(Game* game)
-	: m_Highlight(0)
+	: m_Highlight(0), m_Game(game)
 {
-	m_Game = game;
 	int maxY, maxX;
 	getmaxyx(stdscr, maxY, maxX);
 	const int startY = maxY / 2 - MAP_HEIGHT / 2;

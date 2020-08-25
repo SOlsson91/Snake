@@ -7,6 +7,7 @@
 Game::Game()
 	: m_StateMachine(std::make_shared<StateMachine>()), m_IsRunning(true), m_Score(0)
 {
+	InitNcurses();
 	m_StateMachine->PushState(std::make_unique<MenuState>(this));
 }
 
@@ -38,6 +39,7 @@ void Game::Run()
 		printw("Terminal does not support color");
 		m_IsRunning = false;
 	}
+
 	while (m_IsRunning)
 	{
 		m_StateMachine->Render();

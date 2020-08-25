@@ -1,6 +1,7 @@
 #pragma once
 
 #include "StateMachine.h"
+#include "Constants.h"
 
 class MenuState : public State
 {
