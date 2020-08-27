@@ -30,22 +30,14 @@ void EndState::Render()
 	wattroff(m_Window.get(), COLOR_PAIR(Colors::BackgroundColor));
 	i++;
 
+	wattron(m_Window.get(), m_Highlight == static_cast<int>(EndMenuOptions::Start) ? A_REVERSE : 0);
+	mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
+	wattroff(m_Window.get(), m_Highlight == static_cast<int>(EndMenuOptions::Start) ? A_REVERSE : 0);
 
-	switch (m_Highlight)
-	{
-	case static_cast<int>(EndMenuOptions::Start):
-		wattron(m_Window.get(), A_REVERSE);
-		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
-		wattroff(m_Window.get(), A_REVERSE);
-		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
-		break;
-	case static_cast<int>(EndMenuOptions::Quit):
-		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
-		wattron(m_Window.get(), A_REVERSE);
-		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
-		wattroff(m_Window.get(), A_REVERSE);
-		break;
-	}
+	wattron(m_Window.get(), m_Highlight == static_cast<int>(EndMenuOptions::Quit) ? A_REVERSE : 0);
+	mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
+	wattroff(m_Window.get(), m_Highlight == static_cast<int>(EndMenuOptions::Quit) ? A_REVERSE : 0);
+
 	wrefresh(m_Window.get());
 }
 

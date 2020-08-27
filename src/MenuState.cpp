@@ -31,23 +31,16 @@ void MenuState::Render()
 	wattroff(m_Window.get(), COLOR_PAIR(Colors::BackgroundColor));
 	i++;
 
-	// NOTE: Wow... This was a ugly hack... To tired to work out a propper solution right now. Will get back to this
+	// NOTE: Still ugly but better then repeating code
 	// TODO
-	switch (m_Highlight)
-	{
-	case static_cast<int>(MenuOptions::Start):
-		wattron(m_Window.get(), A_REVERSE);
-		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(start) / 2, start);
-		wattroff(m_Window.get(), A_REVERSE);
-		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
-	break;
-	case static_cast<int>(MenuOptions::Quit):
-		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(start) / 2, start);
-		wattron(m_Window.get(), A_REVERSE);
-		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
-		wattroff(m_Window.get(), A_REVERSE);
-	break;
-	}
+	wattron(m_Window.get(), m_Highlight == static_cast<int>(MenuOptions::Start) ? A_REVERSE : 0);
+	mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(start) / 2, start);
+	wattroff(m_Window.get(), m_Highlight == static_cast<int>(MenuOptions::Start) ? A_REVERSE : 0);
+
+	wattron(m_Window.get(), m_Highlight == static_cast<int>(MenuOptions::Quit) ? A_REVERSE : 0);
+	mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
+	wattroff(m_Window.get(), m_Highlight == static_cast<int>(MenuOptions::Quit) ? A_REVERSE : 0);
+
 	wrefresh(m_Window.get());
 }
 
