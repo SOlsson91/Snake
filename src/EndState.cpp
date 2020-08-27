@@ -33,13 +33,13 @@ void EndState::Render()
 
 	switch (m_Highlight)
 	{
-	case EndMenuOptions::Restart:
+	case static_cast<int>(EndMenuOptions::Start):
 		wattron(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
 		wattroff(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
 		break;
-	case EndMenuOptions::Quit:
+	case static_cast<int>(EndMenuOptions::Quit):
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(replay) / 2, replay);
 		wattron(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 2 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
@@ -54,11 +54,11 @@ void EndState::ProcessInput()
 	switch (getch())
 	{
 	case 10: //ENTER
-		if (m_Highlight == EndMenuOptions::Restart)
+		if (m_Highlight == static_cast<int>(EndMenuOptions::Start))
 		{
 			m_Game->GetStateMachine()->PopState();
 		}
-		else if(m_Highlight == EndMenuOptions::Quit)
+		else if(m_Highlight == static_cast<int>(EndMenuOptions::Quit))
 		{
 			m_Game->SetIsRunning(false);
 		}

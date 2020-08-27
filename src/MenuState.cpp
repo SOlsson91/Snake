@@ -35,13 +35,13 @@ void MenuState::Render()
 	// TODO
 	switch (m_Highlight)
 	{
-	case MenuOptions::Start:
+	case static_cast<int>(MenuOptions::Start):
 		wattron(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(start) / 2, start);
 		wattroff(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
 	break;
-	case MenuOptions::Exit:
+	case static_cast<int>(MenuOptions::Quit):
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(start) / 2, start);
 		wattron(m_Window.get(), A_REVERSE);
 		mvwprintw(m_Window.get(), MAP_HEIGHT / 2 - 4 + i++, MAP_WIDTH / 2 - strlen(quit) / 2, quit);
@@ -56,12 +56,12 @@ void MenuState::ProcessInput()
 	switch (getch())
 	{
 	case 10: //ENTER
-		if (m_Highlight == MenuOptions::Start)
+		if (m_Highlight == static_cast<int>(MenuOptions::Start))
 		{
 			m_Game->GetStateMachine()->PopState();
 			m_Game->GetStateMachine()->PushState(std::make_unique<GameState>(m_Game));
 		}
-		else if (m_Highlight == MenuOptions::Exit)
+		else if (m_Highlight == static_cast<int>(MenuOptions::Quit))
 		{
 			m_Game->SetIsRunning(false);
 		}

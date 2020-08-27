@@ -1,6 +1,6 @@
 #pragma once
 
-enum Colors
+enum class Colors
 {
 	BackgroundColor = 1,
 	SnakeColor = 2,
@@ -14,7 +14,7 @@ struct V2
 	int y;
 };
 
-enum Direction
+enum class Direction
 {
 	Stop = 0,
 	Left = 1,
@@ -23,14 +23,14 @@ enum Direction
 	Down = 4
 };
 
-enum EndMenuOptions
+enum class EndMenuOptions
 {
-	Restart = 0,
+	Start = 0,
 	Quit = 1
 };
 
-enum MenuOptions
+enum class MenuOptions
 {
 	Start = 0,
-	Exit = 1
+	Quit = 1
 };

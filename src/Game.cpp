@@ -21,10 +21,10 @@ void Game::InitNcurses() const
 	noecho();
 
 	start_color();
-	init_pair(Colors::BackgroundColor, COLOR_WHITE, COLOR_BLACK);
-	init_pair(Colors::SnakeColor, COLOR_GREEN, COLOR_GREEN);
-	init_pair(Colors::FruitColor, COLOR_RED, COLOR_RED);
-	init_pair(Colors::TextColor, COLOR_WHITE, COLOR_WHITE);
+	init_pair(static_cast<int>(Colors::BackgroundColor), COLOR_WHITE, COLOR_BLACK);
+	init_pair(static_cast<int>(Colors::SnakeColor), COLOR_GREEN, COLOR_GREEN);
+	init_pair(static_cast<int>(Colors::FruitColor), COLOR_RED, COLOR_RED);
+	init_pair(static_cast<int>(Colors::TextColor), COLOR_WHITE, COLOR_WHITE);
 }
 
 Game::~Game()
